@@ -1,6 +1,7 @@
 from config import api_key
 import os
 import re
+import csv
 import time
 from openai import OpenAI
 import pandas as pd
@@ -78,3 +79,8 @@ for issue_id, content in incidents:
             "estimated_date": "ERROR",
             "estimated_severity": str(e)
         })
+
+with open("cyber_incident_summary_2.csv", mode='w', newline='', encoding='utf-8') as f:
+    writer = csv.DictWriter(f, fieldnames=["issue_id", "estimated_date", "estimated_severity"])
+    writer.writeheader()
+    writer.writerows(output_rows)
